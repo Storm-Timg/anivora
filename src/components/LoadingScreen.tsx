@@ -12,62 +12,43 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
   const [isComplete, setIsComplete] = useState(false);
 
   const loadingSteps = [
-    { text: 'تهيئة محرك الأنمي...', progress: 'جاري الاتصال بعالم الأنمي...', icon: Zap },
-    { text: 'تحميل قوى الشخصيات...', progress: 'جاري استدعاء الأبطال...', icon: Shield },
-    { text: 'شحن أسلحة المعركة...', progress: 'تجهيز المعارك الملحمية...', icon: Swords },
-    { text: 'إشعال قوة التنين...', progress: 'تفعيل الطاقات الخفية...', icon: Flame },
-    { text: 'فتح بوابة الأبعاد...', progress: 'الاستعداد للمغامرة...', icon: Zap },
-    { text: 'تحرير الروح المقاتلة...', progress: 'إطلاق القوة الحقيقية...', icon: Shield }
+    { text: 'تحضير المعركة...', progress: 'اشحن طاقتك', icon: Zap },
+    { text: 'تجميع القوى...', progress: 'استعد للقتال', icon: Shield },
+    { text: 'شحن الأسلحة...', progress: 'جهز أدواتك', icon: Swords },
+    { text: 'إطلاق القوة...', progress: 'انطلق بقوة', icon: Flame },
+    { text: 'بداية الأسطورة...', progress: 'لحظات قليلة', icon: Zap },
+    { text: 'مرحباً بالمحارب...', progress: 'أهلاً وسهلاً', icon: Shield }
   ];
 
   useEffect(() => {
-    // إنشاء الجسيمات المتحركة المطورة
-    const createAdvancedParticles = () => {
+    // إنشاء جسيمات بسيطة وقوية
+    const createSimpleParticles = () => {
       const container = document.querySelector('.anime-particles');
       if (!container) return;
       
-      const particleCount = 50;
+      const particleCount = 15; // قللنا العدد
       container.innerHTML = '';
       
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
-        const isSpecial = Math.random() > 0.7;
         
-        particle.className = isSpecial ? 'special-particle' : 'particle';
         particle.style.cssText = `
           position: absolute;
-          width: ${isSpecial ? '4px' : '2px'};
-          height: ${isSpecial ? '4px' : '2px'};
-          background: ${isSpecial ? 'linear-gradient(45deg, #ff006e, #8338ec)' : 'hsl(var(--primary))'};
+          width: 3px;
+          height: 3px;
+          background: hsl(var(--primary));
           border-radius: 50%;
           left: ${Math.random() * 100}%;
-          animation: ${isSpecial ? 'specialFloat' : 'float'} ${Math.random() * 3 + 4}s infinite linear;
-          animation-delay: ${Math.random() * 8}s;
-          opacity: ${isSpecial ? '0.9' : '0.6'};
-          box-shadow: ${isSpecial ? '0 0 10px rgba(255, 0, 110, 0.8)' : 'none'};
+          animation: float ${Math.random() * 2 + 4}s infinite linear;
+          animation-delay: ${Math.random() * 4}s;
+          opacity: 0.7;
+          box-shadow: 0 0 8px hsl(var(--primary));
         `;
         container.appendChild(particle);
       }
-
-      // إضافة نجوم خاصة
-      for (let i = 0; i < 8; i++) {
-        const star = document.createElement('div');
-        star.style.cssText = `
-          position: absolute;
-          width: 6px;
-          height: 6px;
-          background: linear-gradient(45deg, #06ffa5, #3a86ff);
-          clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-          left: ${Math.random() * 100}%;
-          top: ${Math.random() * 100}%;
-          animation: starTwinkle ${Math.random() * 2 + 3}s ease-in-out infinite;
-          opacity: 0.8;
-        `;
-        container.appendChild(star);
-      }
     };
 
-    createAdvancedParticles();
+    createSimpleParticles();
 
     // محاكاة التحميل المطورة
     const interval = setInterval(() => {
@@ -304,14 +285,14 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
         <div className="font-russo text-3xl text-foreground animate-pulse">
           {isComplete ? (
             <span className="text-transparent bg-gradient-neon bg-clip-text">
-              🔥 مرحباً بك في عالم الأنمي! 🔥
+              🔥 أهلاً بالمحارب! 🔥
             </span>
           ) : (
             currentStepData.text
           )}
         </div>
         <div className="font-electrolize text-lg text-primary/80">
-          {isComplete ? 'جاهز لبدء المغامرة الملحمية' : currentStepData.progress}
+          {isComplete ? 'استعد للمعركة' : currentStepData.progress}
         </div>
       </div>
 
@@ -329,37 +310,28 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
         </div>
       </div>
 
-      {/* مجموعة النقاط المتحركة المطورة */}
+      {/* النقاط المتحركة البسيطة */}
       <div className="flex gap-3 mt-8">
-        {[0, 1, 2, 3, 4].map((i) => (
+        {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className="w-3 h-3 rounded-full bg-gradient-neon animate-bounce shadow-neon"
-            style={{ animationDelay: `${i * 0.2}s` }}
+            className="w-4 h-4 rounded-full bg-primary animate-bounce shadow-neon"
+            style={{ animationDelay: `${i * 0.3}s` }}
           />
         ))}
       </div>
 
-      {/* أيقونة الأنمي المطورة */}
-      <div className="absolute bottom-8 right-8 text-8xl animate-float opacity-90">
-        <div className="relative">
-          🎭
-          <div className="absolute -inset-2 bg-gradient-pulse rounded-full blur-xl opacity-50" />
-        </div>
+      {/* رمز بسيط */}
+      <div className="absolute bottom-8 right-8 text-6xl animate-float opacity-80">
+        ⚡
       </div>
       
-      {/* معلومات التذييل المطورة */}
+      {/* تذييل بسيط */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
         <div className="font-electrolize text-sm text-primary/70 tracking-wider">
-          الإصدار 3.0 - تجربة أنمي ثورية مدعومة بالذكاء الاصطناعي
+          الإصدار 3.0 - تحضير للمعركة
         </div>
-        <div className="w-16 h-px bg-gradient-neon mx-auto mt-2 animate-pulse" />
       </div>
-
-      {/* تأثيرات الضوء العائمة */}
-      <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-accent/10 rounded-full blur-3xl animate-pulse" 
-           style={{ animationDelay: '1s' }} />
     </div>
   );
 }
