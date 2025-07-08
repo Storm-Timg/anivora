@@ -1,10 +1,8 @@
 import { Heart, Mail, Globe, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
 export function Footer() {
-  return (
-    <footer className="bg-card border-t border-border">
+  return <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
@@ -30,19 +28,11 @@ export function Footer() {
           <div className="space-y-4" dir="rtl">
             <h4 className="font-semibold text-foreground">روابط سريعة</h4>
             <ul className="space-y-2">
-              {[
-                "الصفحة الرئيسية",
-                "الأنميات الجديدة", 
-                "الأكثر مشاهدة",
-                "المفضلة",
-                "قائمة المشاهدة"
-              ].map((link) => (
-                <li key={link}>
+              {["الصفحة الرئيسية", "الأنميات الجديدة", "الأكثر مشاهدة", "المفضلة", "قائمة المشاهدة"].map(link => <li key={link}>
                   <Button variant="ghost" className="h-auto p-0 text-sm text-muted-foreground hover:text-primary">
                     {link}
                   </Button>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -50,19 +40,11 @@ export function Footer() {
           <div className="space-y-4" dir="rtl">
             <h4 className="font-semibold text-foreground">التصنيفات</h4>
             <ul className="space-y-2">
-              {[
-                "أكشن",
-                "رومانسي",
-                "كوميدي",
-                "درامي",
-                "فانتازيا"
-              ].map((category) => (
-                <li key={category}>
+              {["أكشن", "رومانسي", "كوميدي", "درامي", "فانتازيا"].map(category => <li key={category}>
                   <Button variant="ghost" className="h-auto p-0 text-sm text-muted-foreground hover:text-primary">
                     {category}
                   </Button>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -73,12 +55,7 @@ export function Footer() {
               اشترك ليصلك كل جديد من الأنميات والتحديثات
             </p>
             <div className="space-y-2">
-              <Input
-                type="email"
-                placeholder="عنوان البريد الإلكتروني"
-                className="bg-background"
-                dir="rtl"
-              />
+              <Input type="email" placeholder="عنوان البريد الإلكتروني" className="bg-background" dir="rtl" />
               <Button variant="anime" className="w-full">
                 <Mail className="h-4 w-4 ml-2" />
                 اشتراك
@@ -90,7 +67,7 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4 text-sm text-muted-foreground" dir="rtl">
-            <span>© 2024 أنمي سلاير. جميع الحقوق محفوظة.</span>
+            <span>© 2026 أنمي سلاير. جميع الحقوق محفوظة.</span>
           </div>
           
           <div className="flex items-center gap-4">
@@ -105,6 +82,5 @@ export function Footer() {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 }
