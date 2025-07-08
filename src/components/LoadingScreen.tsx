@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Zap, Shield, Swords, Flame } from "lucide-react";
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
@@ -11,47 +12,67 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
   const [isComplete, setIsComplete] = useState(false);
 
   const loadingSteps = [
-    { text: 'جاري تحميل أحدث الحلقات...', progress: 'جاري الاتصال بالخادم...' },
-    { text: 'تحميل قاعدة البيانات...', progress: 'جاري تحميل المحتوى...' },
-    { text: 'تحديث قائمة الأنمي...', progress: 'معالجة البيانات...' },
-    { text: 'تحضير واجهة المستخدم...', progress: 'تحسين الأداء...' },
-    { text: 'تحميل الترجمات...', progress: 'إعداد المشغل...' },
-    { text: 'إعداد التجربة النهائية...', progress: 'اكتمال التحميل...' }
+    { text: 'تهيئة محرك الأنمي...', progress: 'جاري الاتصال بعالم الأنمي...', icon: Zap },
+    { text: 'تحميل قوى الشخصيات...', progress: 'جاري استدعاء الأبطال...', icon: Shield },
+    { text: 'شحن أسلحة المعركة...', progress: 'تجهيز المعارك الملحمية...', icon: Swords },
+    { text: 'إشعال قوة التنين...', progress: 'تفعيل الطاقات الخفية...', icon: Flame },
+    { text: 'فتح بوابة الأبعاد...', progress: 'الاستعداد للمغامرة...', icon: Zap },
+    { text: 'تحرير الروح المقاتلة...', progress: 'إطلاق القوة الحقيقية...', icon: Shield }
   ];
 
   useEffect(() => {
-    // إنشاء الجسيمات المتحركة
-    const createParticles = () => {
+    // إنشاء الجسيمات المتحركة المطورة
+    const createAdvancedParticles = () => {
       const container = document.querySelector('.anime-particles');
       if (!container) return;
       
-      const particleCount = 30;
-      container.innerHTML = ''; // مسح الجسيمات السابقة
+      const particleCount = 50;
+      container.innerHTML = '';
       
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
-        particle.className = 'particle';
+        const isSpecial = Math.random() > 0.7;
+        
+        particle.className = isSpecial ? 'special-particle' : 'particle';
         particle.style.cssText = `
           position: absolute;
-          width: 2px;
-          height: 2px;
-          background: hsl(var(--primary));
+          width: ${isSpecial ? '4px' : '2px'};
+          height: ${isSpecial ? '4px' : '2px'};
+          background: ${isSpecial ? 'linear-gradient(45deg, #ff006e, #8338ec)' : 'hsl(var(--primary))'};
           border-radius: 50%;
           left: ${Math.random() * 100}%;
-          animation: float ${Math.random() * 4 + 6}s infinite linear;
+          animation: ${isSpecial ? 'specialFloat' : 'float'} ${Math.random() * 3 + 4}s infinite linear;
           animation-delay: ${Math.random() * 8}s;
-          opacity: 0.6;
+          opacity: ${isSpecial ? '0.9' : '0.6'};
+          box-shadow: ${isSpecial ? '0 0 10px rgba(255, 0, 110, 0.8)' : 'none'};
         `;
         container.appendChild(particle);
       }
+
+      // إضافة نجوم خاصة
+      for (let i = 0; i < 8; i++) {
+        const star = document.createElement('div');
+        star.style.cssText = `
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          background: linear-gradient(45deg, #06ffa5, #3a86ff);
+          clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+          left: ${Math.random() * 100}%;
+          top: ${Math.random() * 100}%;
+          animation: starTwinkle ${Math.random() * 2 + 3}s ease-in-out infinite;
+          opacity: 0.8;
+        `;
+        container.appendChild(star);
+      }
     };
 
-    createParticles();
+    createAdvancedParticles();
 
-    // محاكاة عملية التحميل
+    // محاكاة التحميل المطورة
     const interval = setInterval(() => {
       setProgress(prev => {
-        const increment = Math.random() * 2 + 1;
+        const increment = Math.random() * 1.5 + 0.8;
         const newProgress = Math.min(prev + increment, 100);
         
         const stepIndex = Math.floor((newProgress / 100) * loadingSteps.length);
@@ -63,154 +84,282 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
           
           setTimeout(() => {
             onLoadingComplete();
-          }, 2300);
+          }, 2500);
         }
         
         return newProgress;
       });
-    }, 100);
+    }, 120);
 
     return () => clearInterval(interval);
   }, [onLoadingComplete]);
 
   useEffect(() => {
-    // إضافة تأثير تفاعلي عند تحريك الماوس
+    // تأثيرات تفاعلية متقدمة
     const handleMouseMove = (e: MouseEvent) => {
       const mouseX = e.clientX / window.innerWidth;
       const mouseY = e.clientY / window.innerHeight;
       
-      const bgOffset = 10;
+      // تأثير تحريك الخلفية
+      const bgOffset = 15;
       document.body.style.backgroundPosition = 
         `${50 + (mouseX * bgOffset)}% ${50 + (mouseY * bgOffset)}%`;
+
+      // تأثير الجسيمات التفاعلية
+      const particles = document.querySelectorAll('.particle, .special-particle');
+      particles.forEach((particle, index) => {
+        const el = particle as HTMLElement;
+        const factor = (index % 3 + 1) * 0.5;
+        el.style.transform = `translate(${mouseX * factor}px, ${mouseY * factor}px)`;
+      });
     };
 
-    // تأثير النقر
+    // تأثير النقر المطور
     const handleClick = (e: MouseEvent) => {
+      // تأثير التموج الأساسي
       const ripple = document.createElement('div');
       ripple.style.cssText = `
         position: fixed;
         border-radius: 50%;
-        background: hsl(var(--primary) / 0.3);
+        background: radial-gradient(circle, rgba(255, 0, 110, 0.6) 0%, rgba(131, 56, 236, 0.4) 50%, transparent 70%);
         transform: scale(0);
-        animation: ripple 0.6s ease-out;
-        left: ${e.clientX - 25}px;
-        top: ${e.clientY - 25}px;
-        width: 50px;
-        height: 50px;
+        animation: megaRipple 1s ease-out;
+        left: ${e.clientX - 50}px;
+        top: ${e.clientY - 50}px;
+        width: 100px;
+        height: 100px;
         pointer-events: none;
         z-index: 9999;
       `;
       
       document.body.appendChild(ripple);
       
+      // تأثير الشرر
+      for (let i = 0; i < 8; i++) {
+        const spark = document.createElement('div');
+        const angle = (i / 8) * Math.PI * 2;
+        const distance = 50 + Math.random() * 30;
+        
+        spark.style.cssText = `
+          position: fixed;
+          width: 3px;
+          height: 3px;
+          background: linear-gradient(45deg, #ff006e, #06ffa5);
+          border-radius: 50%;
+          left: ${e.clientX}px;
+          top: ${e.clientY}px;
+          animation: sparkFly 0.8s ease-out forwards;
+          transform: translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px);
+          opacity: 1;
+          pointer-events: none;
+          z-index: 9998;
+        `;
+        
+        document.body.appendChild(spark);
+        
+        setTimeout(() => {
+          if (document.body.contains(spark)) {
+            document.body.removeChild(spark);
+          }
+        }, 800);
+      }
+      
       setTimeout(() => {
         if (document.body.contains(ripple)) {
           document.body.removeChild(ripple);
         }
-      }, 600);
+      }, 1000);
     };
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('click', handleClick);
 
+    // إضافة الأنماط المطورة
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes megaRipple {
+        to {
+          transform: scale(3);
+          opacity: 0;
+        }
+      }
+      
+      @keyframes sparkFly {
+        0% {
+          transform: translate(0, 0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--x, 0), var(--y, 0)) scale(0);
+          opacity: 0;
+        }
+      }
+      
+      @keyframes starTwinkle {
+        0%, 100% { opacity: 0.8; transform: scale(1) rotate(0deg); }
+        50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+      }
+      
+      @keyframes specialFloat {
+        0% {
+          transform: translateY(100vh) rotate(0deg) scale(1);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(50vh) rotate(180deg) scale(1.2);
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(360deg) scale(1);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('click', handleClick);
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
     };
   }, []);
 
   const currentStepData = loadingSteps[currentStep];
+  const CurrentIcon = currentStepData.icon;
 
   return (
     <div className={cn(
-      "fixed inset-0 z-50 bg-gradient-to-br from-background via-background to-accent/20",
-      "flex flex-col items-center justify-center overflow-hidden",
-      "transition-all duration-800 ease-in-out",
-      isComplete && "opacity-0 scale-95 blur-md"
+      "fixed inset-0 z-50 bg-gradient-cyber overflow-hidden",
+      "flex flex-col items-center justify-center",
+      "transition-all duration-1000 ease-in-out",
+      isComplete && "opacity-0 scale-90 blur-sm"
     )}>
-      {/* الجسيمات المتحركة */}
+      {/* الجسيمات المتحركة المطورة */}
       <div className="anime-particles absolute inset-0 pointer-events-none z-10" />
       
-      {/* إطار الأنمي */}
-      <div className="absolute top-12 left-12 w-15 h-15 border-2 border-primary rounded-lg 
-                      flex items-center justify-center bg-primary/10 text-2xl text-primary
-                      animate-pulse">
-        📺
+      {/* تأثير الضوء الخلفي */}
+      <div className="absolute inset-0 bg-gradient-pulse opacity-30 animate-pulse" />
+      
+      {/* إطار الأنمي المطور */}
+      <div className="absolute top-8 left-8 w-20 h-20 border-2 border-primary rounded-xl 
+                      flex items-center justify-center bg-gradient-neon p-1 animate-cyber-spin
+                      shadow-cyber">
+        <div className="w-full h-full bg-background/90 rounded-lg flex items-center justify-center text-3xl">
+          📺
+        </div>
       </div>
 
-      {/* حاوية الشعار */}
-      <div className="relative z-20 mb-15 text-center">
-        <h1 className="text-6xl md:text-7xl font-bold text-foreground mb-3 
-                       animate-glow drop-shadow-glow">
+      {/* حاوية الشعار المطورة */}
+      <div className="relative z-20 mb-16 text-center">
+        <h1 className="font-orbitron text-8xl md:text-9xl font-black text-transparent 
+                       bg-gradient-neon bg-clip-text mb-4 animate-pulse-glow
+                       drop-shadow-2xl">
           أنمي سلاير
         </h1>
-        <p className="text-xl text-primary font-light tracking-wider opacity-80">
-          موقع الأنمي الأول في العالم العربي
-        </p>
+        <div className="relative">
+          <p className="font-electrolize text-2xl text-primary font-bold tracking-[0.3em] 
+                         opacity-90 animate-neon-flicker">
+            موقع الأنمي الأول في العالم العربي
+          </p>
+          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 
+                          bg-gradient-neon rounded-full animate-pulse" />
+        </div>
       </div>
 
-      {/* دائرة التحميل */}
-      <div className="relative w-30 h-30 mb-10">
-        <div className="absolute inset-0 rounded-full border-3 border-transparent 
-                        border-t-primary animate-spin" 
-             style={{ animationDuration: '1.2s' }} />
-        <div className="absolute inset-0 rounded-full border-3 border-transparent 
-                        border-b-accent animate-spin" 
-             style={{ animationDuration: '1.8s', animationDirection: 'reverse' }} />
-        <div className="absolute inset-0 rounded-full border-3 border-transparent 
-                        border-l-anime-purple animate-spin" 
-             style={{ animationDuration: '2.4s' }} />
+      {/* دائرة التحميل الملحمية */}
+      <div className="relative w-40 h-40 mb-12 animate-pulse-glow">
+        {/* الحلقات الدوارة */}
+        <div className="absolute inset-0 rounded-full border-4 border-transparent 
+                        border-t-primary border-r-primary/50 animate-spin shadow-neon" 
+             style={{ animationDuration: '1s' }} />
+        <div className="absolute inset-2 rounded-full border-4 border-transparent 
+                        border-b-accent border-l-accent/50 animate-spin shadow-cyber" 
+             style={{ animationDuration: '1.5s', animationDirection: 'reverse' }} />
+        <div className="absolute inset-4 rounded-full border-4 border-transparent 
+                        border-l-anime-purple border-t-anime-purple/50 animate-spin" 
+             style={{ animationDuration: '2s' }} />
         
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl font-semibold text-foreground">
+        {/* النسبة المئوية */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <CurrentIcon className="w-8 h-8 text-primary mb-2 animate-bounce" />
+          <span className="font-russo text-3xl font-bold text-foreground animate-pulse">
             {Math.round(progress)}%
           </span>
         </div>
+        
+        {/* تأثير الهالة */}
+        <div className="absolute -inset-4 rounded-full bg-gradient-pulse opacity-50 blur-sm animate-pulse" />
       </div>
 
-      {/* نص التحميل */}
-      <div className="text-2xl text-foreground text-center mb-8 animate-pulse">
-        {isComplete ? 'مرحباً بك في أنمي سلاير! 🎉' : currentStepData.text}
+      {/* نص التحميل الملحمي */}
+      <div className="text-center mb-10 space-y-3">
+        <div className="font-russo text-3xl text-foreground animate-pulse">
+          {isComplete ? (
+            <span className="text-transparent bg-gradient-neon bg-clip-text">
+              🔥 مرحباً بك في عالم الأنمي! 🔥
+            </span>
+          ) : (
+            currentStepData.text
+          )}
+        </div>
+        <div className="font-electrolize text-lg text-primary/80">
+          {isComplete ? 'جاهز لبدء المغامرة الملحمية' : currentStepData.progress}
+        </div>
       </div>
 
-      {/* شريط التقدم */}
-      <div className="w-full max-w-md flex flex-col items-center gap-4">
-        <div className="w-full h-1 bg-muted/30 rounded-full overflow-hidden">
+      {/* شريط التقدم المطور */}
+      <div className="w-full max-w-lg flex flex-col items-center gap-6">
+        <div className="w-full h-3 bg-muted/20 rounded-full overflow-hidden border border-primary/30 shadow-cyber">
           <div 
-            className="h-full bg-gradient-hero rounded-full transition-all duration-300 relative"
+            className="h-full bg-gradient-neon rounded-full transition-all duration-500 relative overflow-hidden"
             style={{ width: `${progress}%` }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent
                             animate-shimmer" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 animate-pulse" />
           </div>
         </div>
-        <p className="text-primary font-medium">
-          {isComplete ? 'جاهز للمشاهدة' : currentStepData.progress}
-        </p>
       </div>
 
-      {/* النقاط المتحركة */}
-      <div className="flex gap-2 mt-5">
-        {[0, 1, 2].map((i) => (
+      {/* مجموعة النقاط المتحركة المطورة */}
+      <div className="flex gap-3 mt-8">
+        {[0, 1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="w-2 h-2 rounded-full bg-primary animate-bounce"
-            style={{ animationDelay: `${i * 0.16}s` }}
+            className="w-3 h-3 rounded-full bg-gradient-neon animate-bounce shadow-neon"
+            style={{ animationDelay: `${i * 0.2}s` }}
           />
         ))}
       </div>
 
-      {/* أيقونة الأنمي */}
-      <div className="absolute bottom-12 right-12 text-6xl text-primary opacity-80 animate-float">
-        🎭
+      {/* أيقونة الأنمي المطورة */}
+      <div className="absolute bottom-8 right-8 text-8xl animate-float opacity-90">
+        <div className="relative">
+          🎭
+          <div className="absolute -inset-2 bg-gradient-pulse rounded-full blur-xl opacity-50" />
+        </div>
       </div>
       
-      {/* معلومات التذييل */}
-      <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 
-                      text-sm text-muted-foreground text-center">
-        الإصدار 2.0 - تجربة مشاهدة محسنة
+      {/* معلومات التذييل المطورة */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
+        <div className="font-electrolize text-sm text-primary/70 tracking-wider">
+          الإصدار 3.0 - تجربة أنمي ثورية مدعومة بالذكاء الاصطناعي
+        </div>
+        <div className="w-16 h-px bg-gradient-neon mx-auto mt-2 animate-pulse" />
       </div>
 
+      {/* تأثيرات الضوء العائمة */}
+      <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-accent/10 rounded-full blur-3xl animate-pulse" 
+           style={{ animationDelay: '1s' }} />
     </div>
   );
 }
