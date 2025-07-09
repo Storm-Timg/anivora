@@ -29,29 +29,6 @@ interface AnimeSectionProps {
 }
 
 export function AnimeSection({ title, animes, className }: AnimeSectionProps) {
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  const handleScroll = (direction: "left" | "right") => {
-    const container = document.getElementById(`anime-container-${title}`);
-    if (!container) return;
-
-    const scrollAmount = 300;
-    const newScrollPosition = direction === "left" 
-      ? Math.max(0, scrollPosition - scrollAmount)
-      : scrollPosition + scrollAmount;
-
-    container.scrollTo({
-      left: newScrollPosition,
-      behavior: "smooth"
-    });
-
-    setScrollPosition(newScrollPosition);
-    setCanScrollLeft(newScrollPosition > 0);
-    setCanScrollRight(newScrollPosition < container.scrollWidth - container.clientWidth);
-  };
-
   return (
     <section className={cn("py-8", className)}>
       <div className="container mx-auto px-4">
@@ -60,44 +37,21 @@ export function AnimeSection({ title, animes, className }: AnimeSectionProps) {
           <h2 className="text-2xl md:text-3xl font-bold text-foreground" dir="rtl">
             {title}
           </h2>
-          
-          {/* Navigation Buttons */}
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => handleScroll("left")}
-              disabled={!canScrollLeft}
-              className="hidden md:flex"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => handleScroll("right")}
-              disabled={!canScrollRight}
-              className="hidden md:flex"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
         </div>
 
-        {/* Anime Grid/Slider */}
-        <div 
-          id={`anime-container-${title}`}
-          className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {animes.map((anime) => (
-            <div key={anime.id} className="flex-none w-64">
-              <AnimeCard
-                {...anime}
-                onPlay={(id) => console.log("Playing anime:", id)}
-              />
+        {/* Coming Soon Card */}
+        <div className="relative">
+          <div className="bg-card/60 backdrop-blur-sm border border-border rounded-lg p-8 text-center shadow-card">
+            <div className="animate-bounce mb-4">
+              🔧
             </div>
-          ))}
+            <div className="text-lg font-medium text-muted-foreground mb-2">
+              🔒 قريبًا... نحن نعمل على هذا القسم!
+            </div>
+            <div className="text-sm text-muted-foreground/70">
+              سيتم إضافة المحتوى قريباً
+            </div>
+          </div>
         </div>
       </div>
     </section>
