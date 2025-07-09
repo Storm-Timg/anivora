@@ -11,9 +11,7 @@ export function Footer() {
               <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-lg">A</span>
               </div>
-              <h3 className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-                أنمي سلاير
-              </h3>
+              <h3 className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent text-center">Anivora</h3>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
               منصة الأنمي الأولى في العالم العربي. تمتع بمشاهدة أحدث وأفضل الأنميات بجودة عالية وترجمة احترافية.
