@@ -61,7 +61,7 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative h-full flex items-center">
         <div className="container mx-auto px-4 max-w-2xl">
-          <div className="space-y-6 text-right" dir="rtl">
+          <div className="space-y-4 md:space-y-6 text-right" dir="rtl">
             {/* Rating */}
             <div className="flex justify-end">
               <div className="flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-2">
@@ -72,10 +72,10 @@ export function HeroSection() {
 
             {/* Title */}
             <div className="space-y-2">
-              <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
+              <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-foreground leading-tight">
                 {anime.titleArabic}
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
                 {anime.title}
               </p>
             </div>
@@ -103,25 +103,28 @@ export function HeroSection() {
             </div>
 
             {/* Description */}
-            <p className="text-foreground/90 leading-relaxed max-w-xl text-right">
+            <p className="text-sm sm:text-base text-foreground/90 leading-relaxed max-w-xl text-right line-clamp-3 sm:line-clamp-none">
               {anime.description}
             </p>
 
             {/* Action Buttons */}
-            <div className="flex gap-4 justify-end flex-wrap">
-              <Button variant="anime" size="lg" className="gap-2">
-                <Play className="h-5 w-5 fill-current" />
-                مشاهدة الآن
+            <div className="flex gap-2 md:gap-4 justify-end flex-wrap">
+              <Button variant="anime" size="lg" className="gap-2 flex-1 sm:flex-none">
+                <Play className="h-4 w-4 md:h-5 md:w-5 fill-current" />
+                <span className="text-sm md:text-base">مشاهدة الآن</span>
               </Button>
               
-              <Button variant="outline" size="lg" className="gap-2">
+              <Button variant="outline" size="lg" className="gap-2 hidden sm:flex">
                 <Info className="h-5 w-5" />
                 تفاصيل أكثر
               </Button>
               
-              <Button variant="ghost" size="lg" className="gap-2">
+              <Button variant="ghost" size="icon" className="sm:hidden">
+                <Info className="h-5 w-5" />
+              </Button>
+              
+              <Button variant="ghost" size="icon">
                 <Bookmark className="h-5 w-5" />
-                إضافة للمفضلة
               </Button>
             </div>
           </div>

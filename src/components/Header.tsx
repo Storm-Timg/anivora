@@ -24,15 +24,20 @@ export function Header({
             <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-lg">A</span>
             </div>
-            <h1 className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">Anivora</h1>
+            <h1 className="text-lg md:text-xl font-bold bg-gradient-hero bg-clip-text text-transparent hidden xs:block">Anivora</h1>
           </div>
         </div>
 
         {/* Search Bar */}
-        <div className="flex-1 max-w-md mx-8 relative">
+        <div className="flex-1 max-w-md mx-2 md:mx-8 relative hidden sm:block">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input type="text" placeholder="ابحث عن الأنمي..." value={searchValue} onChange={e => setSearchValue(e.target.value)} className="pl-10 pr-4 bg-card border-border focus:ring-primary" dir="rtl" />
         </div>
+
+        {/* Mobile Search Button */}
+        <Button variant="ghost" size="icon" className="sm:hidden">
+          <Search className="h-5 w-5" />
+        </Button>
 
         {/* Navigation and Actions */}
         <div className="flex items-center gap-2">

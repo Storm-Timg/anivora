@@ -58,14 +58,14 @@ const WatchAnime = () => {
         </div>
 
         {/* Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-8">
+        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8">
           <div className="container mx-auto">
             <div className="max-w-2xl">
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-4" dir="rtl">
+              <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-white mb-4" dir="rtl">
                 {animeData.titleArabic}
               </h1>
               
-              <div className="flex items-center gap-4 mb-6 text-white/80">
+              <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-4 md:mb-6 text-white/80 text-sm md:text-base">
                 <div className="flex items-center gap-1">
                   <Star className="h-4 w-4 text-yellow-400 fill-current" />
                   <span className="font-medium">{animeData.rating}</span>
@@ -78,7 +78,7 @@ const WatchAnime = () => {
                   <Eye className="h-4 w-4" />
                   <span>{animeData.episodes} حلقة</span>
                 </div>
-                <Badge variant="secondary">{animeData.status}</Badge>
+                <Badge variant="secondary" className="text-xs md:text-sm">{animeData.status}</Badge>
               </div>
 
               <div className="flex flex-wrap gap-2 mb-6">
@@ -89,21 +89,27 @@ const WatchAnime = () => {
                 ))}
               </div>
 
-              <p className="text-white/90 text-lg mb-8 leading-relaxed" dir="rtl">
+              <p className="text-white/90 text-sm md:text-lg mb-6 md:mb-8 leading-relaxed line-clamp-3 md:line-clamp-none" dir="rtl">
                 {animeData.description}
               </p>
 
               {/* Action Buttons */}
-              <div className="flex gap-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                  <Play className="h-5 w-5 mr-2" />
+              <div className="flex flex-wrap gap-2 md:gap-4">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground flex-1 sm:flex-none">
+                  <Play className="h-4 w-4 md:h-5 md:w-5 mr-2" />
                   ▶️ ابدأ المشاهدة
                 </Button>
-                <Button variant="outline" size="lg" className="bg-card/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/10">
+                <Button variant="outline" size="sm" className="bg-card/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/10 sm:hidden">
+                  <Heart className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="lg" className="bg-card/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/10 hidden sm:flex">
                   <Heart className="h-5 w-5 mr-2" />
                   إضافة للمفضلة
                 </Button>
-                <Button variant="outline" size="lg" className="bg-card/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/10">
+                <Button variant="outline" size="sm" className="bg-card/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/10 sm:hidden">
+                  <Share2 className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="lg" className="bg-card/20 backdrop-blur-sm border-white/30 text-white hover:bg-white/10 hidden sm:flex">
                   <Share2 className="h-5 w-5 mr-2" />
                   مشاركة
                 </Button>
@@ -114,8 +120,8 @@ const WatchAnime = () => {
       </div>
 
       {/* Content Section */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 py-6 md:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2">
             <Card className="mb-8">

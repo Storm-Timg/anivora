@@ -80,7 +80,7 @@ export function Categories() {
         </div>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
           {categories.map((category) => {
             const IconComponent = category.icon;
             const isSelected = selectedCategory === category.id;
@@ -93,27 +93,27 @@ export function Categories() {
                   isSelected ? null : category.id
                 )}
                 className={cn(
-                  "h-auto p-6 flex flex-col items-center gap-3 group transition-all duration-300 hover:scale-105",
+                  "h-auto p-4 md:p-6 flex flex-col items-center gap-2 md:gap-3 group transition-all duration-300 hover:scale-105",
                   "bg-card border border-border rounded-xl",
                   isSelected && "ring-2 ring-primary shadow-glow"
                 )}
               >
                 {/* Icon with gradient background */}
                 <div className={cn(
-                  "w-16 h-16 rounded-full flex items-center justify-center",
+                  "w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center",
                   "bg-gradient-to-br transition-all duration-300 group-hover:scale-110",
                   category.color,
                   isSelected && "shadow-lg"
                 )}>
-                  <IconComponent className="h-8 w-8 text-white" />
+                  <IconComponent className="h-6 w-6 md:h-8 md:w-8 text-white" />
                 </div>
 
                 {/* Category Info */}
                 <div className="text-center space-y-1">
-                  <h3 className="font-semibold text-foreground" dir="rtl">
+                  <h3 className="text-sm md:text-base font-semibold text-foreground" dir="rtl">
                     {category.nameArabic}
                   </h3>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground hidden sm:block">
                     {category.name}
                   </p>
                   <span className="text-xs text-primary font-medium">
