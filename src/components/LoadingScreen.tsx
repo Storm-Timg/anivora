@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Zap, Shield, Swords, Flame } from "lucide-react";
+import { Zap, Rocket, Crown, Sword } from "lucide-react";
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
@@ -10,45 +10,66 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
   const [progress, setProgress] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [showExplosion, setShowExplosion] = useState(false);
 
   const loadingSteps = [
-    { text: 'تحضير المعركة...', progress: 'اشحن طاقتك', icon: Zap },
-    { text: 'تجميع القوى...', progress: 'استعد للقتال', icon: Shield },
-    { text: 'شحن الأسلحة...', progress: 'جهز أدواتك', icon: Swords },
-    { text: 'إطلاق القوة...', progress: 'انطلق بقوة', icon: Flame },
-    { text: 'بداية الأسطورة...', progress: 'لحظات قليلة', icon: Zap },
-    { text: 'مرحباً بالمحارب...', progress: 'أهلاً وسهلاً', icon: Shield }
+    { text: '🚀 إشعال المحركات...', progress: 'تدمير الحواجز', icon: Rocket },
+    { text: '⚡ تفجير الطاقة...', progress: 'كسر القيود', icon: Zap },
+    { text: '👑 تجهيز العرش...', progress: 'قيادة الأساطير', icon: Crown },
+    { text: '⚔️ شحذ السيوف...', progress: 'الاستعداد للمعركة', icon: Sword },
+    { text: '🔥 إطلاق الجحيم...', progress: 'لا رحمة للأعداء', icon: Zap },
+    { text: '💀 السيطرة المطلقة...', progress: 'أنت الملك الآن', icon: Crown }
   ];
 
   useEffect(() => {
-    // إنشاء جسيمات بسيطة وقوية
-    const createSimpleParticles = () => {
+    // إنشاء جسيمات مجنونة ومتفجرة
+    const createInsaneParticles = () => {
       const container = document.querySelector('.anime-particles');
       if (!container) return;
       
-      const particleCount = 15; // قللنا العدد
+      const particleCount = 50; // جسيمات أكثر للجنون
       container.innerHTML = '';
       
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
+        const size = Math.random() * 4 + 2;
+        const colors = ['#ff006e', '#8338ec', '#3a86ff', '#06ffa5', '#ffbe0b'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
         
         particle.style.cssText = `
           position: absolute;
-          width: 3px;
-          height: 3px;
-          background: hsl(var(--primary));
+          width: ${size}px;
+          height: ${size}px;
+          background: ${color};
           border-radius: 50%;
           left: ${Math.random() * 100}%;
-          animation: float ${Math.random() * 2 + 4}s infinite linear;
-          animation-delay: ${Math.random() * 4}s;
-          opacity: 0.7;
-          box-shadow: 0 0 8px hsl(var(--primary));
+          animation: explodeFloat ${Math.random() * 3 + 2}s infinite linear;
+          animation-delay: ${Math.random() * 5}s;
+          opacity: 0.8;
+          box-shadow: 0 0 15px ${color}, 0 0 30px ${color};
+          filter: brightness(1.5);
         `;
         container.appendChild(particle);
       }
+      
+      // إضافة نجوم متفجرة
+      for (let i = 0; i < 20; i++) {
+        const star = document.createElement('div');
+        star.innerHTML = '⭐';
+        star.style.cssText = `
+          position: absolute;
+          font-size: ${Math.random() * 15 + 10}px;
+          left: ${Math.random() * 100}%;
+          animation: starExplode ${Math.random() * 4 + 3}s infinite ease-in-out;
+          animation-delay: ${Math.random() * 6}s;
+          opacity: 0.9;
+          filter: drop-shadow(0 0 10px #ffbe0b);
+        `;
+        container.appendChild(star);
+      }
     };
 
-    createSimpleParticles();
+    createInsaneParticles();
 
     // محاكاة التحميل المطورة
     const interval = setInterval(() => {
@@ -61,11 +82,14 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
         
         if (newProgress >= 100) {
           clearInterval(interval);
-          setIsComplete(true);
+          setShowExplosion(true);
           
           setTimeout(() => {
-            onLoadingComplete();
-          }, 2500);
+            setIsComplete(true);
+            setTimeout(() => {
+              onLoadingComplete();
+            }, 1500);
+          }, 1000);
         }
         
         return newProgress;
@@ -155,12 +179,12 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('click', handleClick);
 
-    // إضافة الأنماط المطورة
+    // إضافة الأنماط المجنونة
     const style = document.createElement('style');
     style.textContent = `
       @keyframes megaRipple {
         to {
-          transform: scale(3);
+          transform: scale(5);
           opacity: 0;
         }
       }
@@ -176,30 +200,78 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
         }
       }
       
-      @keyframes starTwinkle {
-        0%, 100% { opacity: 0.8; transform: scale(1) rotate(0deg); }
-        50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
-      }
-      
-      @keyframes specialFloat {
+      @keyframes explodeFloat {
         0% {
-          transform: translateY(100vh) rotate(0deg) scale(1);
+          transform: translateY(100vh) rotate(0deg) scale(0.5);
           opacity: 0;
         }
-        10% {
+        20% {
           opacity: 1;
+          transform: translateY(80vh) rotate(90deg) scale(1.2);
         }
         50% {
-          transform: translateY(50vh) rotate(180deg) scale(1.2);
+          transform: translateY(40vh) rotate(180deg) scale(1.5);
           opacity: 1;
         }
-        90% {
+        80% {
+          transform: translateY(10vh) rotate(270deg) scale(1);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-20vh) rotate(360deg) scale(0.3);
+          opacity: 0;
+        }
+      }
+      
+      @keyframes starExplode {
+        0% {
+          transform: translateY(100vh) rotate(0deg) scale(0.5);
+          opacity: 0;
+        }
+        25% {
+          opacity: 1;
+          transform: translateY(75vh) rotate(180deg) scale(2);
+        }
+        50% {
+          transform: translateY(50vh) rotate(360deg) scale(1.5);
+          opacity: 1;
+        }
+        75% {
+          transform: translateY(25vh) rotate(540deg) scale(2.5);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-10vh) rotate(720deg) scale(0.2);
+          opacity: 0;
+        }
+      }
+      
+      @keyframes finalExplosion {
+        0% {
+          transform: scale(0) rotate(0deg);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(3) rotate(180deg);
           opacity: 1;
         }
         100% {
-          transform: translateY(-100vh) rotate(360deg) scale(1);
+          transform: scale(8) rotate(360deg);
           opacity: 0;
         }
+      }
+      
+      @keyframes insaneShake {
+        0%, 100% { transform: translateX(0); }
+        10% { transform: translateX(-10px) rotate(-2deg); }
+        20% { transform: translateX(10px) rotate(2deg); }
+        30% { transform: translateX(-8px) rotate(-1deg); }
+        40% { transform: translateX(8px) rotate(1deg); }
+        50% { transform: translateX(-6px) rotate(-0.5deg); }
+        60% { transform: translateX(6px) rotate(0.5deg); }
+        70% { transform: translateX(-4px); }
+        80% { transform: translateX(4px); }
+        90% { transform: translateX(-2px); }
       }
     `;
     document.head.appendChild(style);
@@ -218,118 +290,182 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
 
   return (
     <div className={cn(
-      "fixed inset-0 z-50 bg-gradient-cyber overflow-hidden",
+      "fixed inset-0 z-50 overflow-hidden",
       "flex flex-col items-center justify-center",
       "transition-all duration-1000 ease-in-out",
-      isComplete && "opacity-0 scale-90 blur-sm"
+      "bg-gradient-to-br from-black via-purple-900 to-black",
+      isComplete && "opacity-0 scale-90 blur-sm",
+      showExplosion && "animate-[insaneShake_0.5s_ease-in-out]"
     )}>
-      {/* الجسيمات المتحركة المطورة */}
+      {/* الجسيمات المجنونة */}
       <div className="anime-particles absolute inset-0 pointer-events-none z-10" />
       
-      {/* تأثير الضوء الخلفي */}
-      <div className="absolute inset-0 bg-gradient-pulse opacity-30 animate-pulse" />
+      {/* تأثيرات الخلفية المتفجرة */}
+      <div className="absolute inset-0 bg-gradient-radial from-red-500/20 via-purple-500/10 to-transparent animate-pulse" />
+      <div className="absolute inset-0 bg-gradient-radial from-blue-500/15 via-transparent to-cyan-500/10 animate-ping" />
       
-      {/* إطار الأنمي المطور */}
-      <div className="absolute top-8 left-8 w-20 h-20 border-2 border-primary rounded-xl 
-                      flex items-center justify-center bg-gradient-neon p-1 animate-cyber-spin
-                      shadow-cyber">
-        <div className="w-full h-full bg-background/90 rounded-lg flex items-center justify-center text-3xl">
-          📺
+      {/* إطار مجنون */}
+      <div className="absolute top-8 left-8 w-24 h-24 border-4 border-red-500 rounded-2xl 
+                      flex items-center justify-center bg-gradient-to-r from-purple-600 to-red-600 p-2
+                      shadow-[0_0_50px_red] animate-[cyber-spin_2s_ease-in-out_infinite]">
+        <div className="w-full h-full bg-black/80 rounded-xl flex items-center justify-center text-4xl animate-bounce">
+          🎮
+        </div>
+      </div>
+      
+      {/* رمز الانفجار */}
+      <div className="absolute top-8 right-8 w-24 h-24 border-4 border-yellow-500 rounded-2xl 
+                      flex items-center justify-center bg-gradient-to-r from-orange-600 to-yellow-600 p-2
+                      shadow-[0_0_50px_yellow] animate-[cyber-spin_1.5s_ease-in-out_infinite_reverse]">
+        <div className="w-full h-full bg-black/80 rounded-xl flex items-center justify-center text-4xl animate-pulse">
+          💥
         </div>
       </div>
 
-      {/* حاوية الشعار المطورة */}
-      <div className="relative z-20 mb-16 text-center">
-        <h1 className="font-orbitron text-8xl md:text-9xl font-black text-transparent 
-                       bg-gradient-neon bg-clip-text mb-4 animate-pulse-glow
-                       drop-shadow-2xl">
-          أنمي سلاير
+      {/* انفجار نهائي */}
+      {showExplosion && (
+        <div className="absolute inset-0 z-30">
+          <div className="absolute inset-0 bg-gradient-radial from-white via-yellow-400 to-red-500 
+                          animate-[finalExplosion_1s_ease-out] opacity-80" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+                          text-9xl animate-[finalExplosion_1s_ease-out]">
+            💥🔥💥
+          </div>
+        </div>
+      )}
+
+      {/* الشعار المجنون */}
+      <div className={cn(
+        "relative z-20 mb-20 text-center",
+        showExplosion && "animate-[insaneShake_0.3s_ease-in-out]"
+      )}>
+        <h1 className="font-orbitron text-7xl md:text-8xl font-black text-transparent 
+                       bg-gradient-to-r from-red-500 via-purple-500 via-blue-500 to-cyan-500 
+                       bg-clip-text mb-6 animate-pulse-glow drop-shadow-2xl
+                       filter drop-shadow-[0_0_30px_#ff006e]">
+          🔥 أنمي سلاير 🔥
         </h1>
         <div className="relative">
-          <p className="font-electrolize text-2xl text-primary font-bold tracking-[0.3em] 
-                         opacity-90 animate-neon-flicker">
-            موقع الأنمي الأول في العالم العربي
+          <p className="font-electrolize text-3xl text-red-400 font-bold tracking-[0.4em] 
+                         opacity-90 animate-neon-flicker filter drop-shadow-[0_0_20px_#ff0040]">
+            👑 إمبراطورية الأنمي 👑
           </p>
-          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 
-                          bg-gradient-neon rounded-full animate-pulse" />
+          <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-40 h-2 
+                          bg-gradient-to-r from-red-500 to-purple-500 rounded-full animate-pulse 
+                          shadow-[0_0_20px_#ff006e]" />
         </div>
       </div>
 
-      {/* دائرة التحميل الملحمية */}
-      <div className="relative w-40 h-40 mb-12 animate-pulse-glow">
-        {/* الحلقات الدوارة */}
-        <div className="absolute inset-0 rounded-full border-4 border-transparent 
-                        border-t-primary border-r-primary/50 animate-spin shadow-neon" 
-             style={{ animationDuration: '1s' }} />
-        <div className="absolute inset-2 rounded-full border-4 border-transparent 
-                        border-b-accent border-l-accent/50 animate-spin shadow-cyber" 
-             style={{ animationDuration: '1.5s', animationDirection: 'reverse' }} />
-        <div className="absolute inset-4 rounded-full border-4 border-transparent 
-                        border-l-anime-purple border-t-anime-purple/50 animate-spin" 
-             style={{ animationDuration: '2s' }} />
+      {/* دوائر التحميل المتفجرة */}
+      <div className={cn(
+        "relative w-48 h-48 mb-16",
+        showExplosion && "animate-[insaneShake_0.2s_ease-in-out_infinite]"
+      )}>
+        {/* حلقات دوارة مجنونة */}
+        <div className="absolute inset-0 rounded-full border-8 border-transparent 
+                        border-t-red-500 border-r-red-400 animate-spin 
+                        shadow-[0_0_40px_red]" 
+             style={{ animationDuration: '0.8s' }} />
+        <div className="absolute inset-3 rounded-full border-6 border-transparent 
+                        border-b-purple-500 border-l-purple-400 animate-spin 
+                        shadow-[0_0_30px_purple]" 
+             style={{ animationDuration: '1.2s', animationDirection: 'reverse' }} />
+        <div className="absolute inset-6 rounded-full border-4 border-transparent 
+                        border-l-blue-500 border-t-cyan-400 animate-spin
+                        shadow-[0_0_20px_blue]" 
+             style={{ animationDuration: '1.6s' }} />
         
-        {/* النسبة المئوية */}
+        {/* المركز المتفجر */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <CurrentIcon className="w-8 h-8 text-primary mb-2 animate-bounce" />
-          <span className="font-russo text-3xl font-bold text-foreground animate-pulse">
+          <CurrentIcon className="w-12 h-12 text-red-400 mb-3 animate-bounce 
+                                  filter drop-shadow-[0_0_15px_#ff0040]" />
+          <span className="font-russo text-4xl font-black text-white animate-pulse
+                           filter drop-shadow-[0_0_10px_#ffffff]">
             {Math.round(progress)}%
           </span>
+          {showExplosion && (
+            <div className="absolute text-6xl animate-ping">💥</div>
+          )}
         </div>
         
-        {/* تأثير الهالة */}
-        <div className="absolute -inset-4 rounded-full bg-gradient-pulse opacity-50 blur-sm animate-pulse" />
+        {/* هالة متفجرة */}
+        <div className="absolute -inset-8 rounded-full bg-gradient-radial 
+                        from-red-500/30 via-purple-500/20 to-transparent 
+                        blur-sm animate-pulse" />
       </div>
 
-      {/* نص التحميل الملحمي */}
-      <div className="text-center mb-10 space-y-3">
-        <div className="font-russo text-3xl text-foreground animate-pulse">
+      {/* النصوص المجنونة */}
+      <div className={cn(
+        "text-center mb-12 space-y-4",
+        showExplosion && "animate-[insaneShake_0.1s_ease-in-out_infinite]"
+      )}>
+        <div className="font-russo text-4xl font-black text-transparent bg-gradient-to-r 
+                        from-red-400 via-purple-400 to-cyan-400 bg-clip-text animate-pulse">
           {isComplete ? (
-            <span className="text-transparent bg-gradient-neon bg-clip-text">
-              🔥 أهلاً بالمحارب! 🔥
+            <span className="filter drop-shadow-[0_0_20px_#ff006e]">
+              🎯 السيطرة المطلقة! 🎯
+            </span>
+          ) : showExplosion ? (
+            <span className="filter drop-shadow-[0_0_20px_#ff006e]">
+              💀 تدمير شامل! 💀
             </span>
           ) : (
             currentStepData.text
           )}
         </div>
-        <div className="font-electrolize text-lg text-primary/80">
-          {isComplete ? 'استعد للمعركة' : currentStepData.progress}
+        <div className="font-electrolize text-xl text-purple-300 font-bold">
+          {isComplete ? '🔥 أنت المَلِك الآن! 🔥' : showExplosion ? '⚡ انفجار نووي! ⚡' : currentStepData.progress}
         </div>
       </div>
 
-      {/* شريط التقدم المطور */}
-      <div className="w-full max-w-lg flex flex-col items-center gap-6">
-        <div className="w-full h-3 bg-muted/20 rounded-full overflow-hidden border border-primary/30 shadow-cyber">
+      {/* شريط التقدم المتفجر */}
+      <div className="w-full max-w-2xl flex flex-col items-center gap-8">
+        <div className="w-full h-6 bg-black/50 rounded-full overflow-hidden border-2 border-red-500/50 
+                        shadow-[0_0_30px_red]">
           <div 
-            className="h-full bg-gradient-neon rounded-full transition-all duration-500 relative overflow-hidden"
+            className="h-full bg-gradient-to-r from-red-500 via-purple-500 to-cyan-500 
+                       rounded-full transition-all duration-300 relative overflow-hidden
+                       shadow-[0_0_20px_#ff006e]"
             style={{ width: `${progress}%` }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent
                             animate-shimmer" />
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-r from-red-400/40 to-purple-400/40 animate-pulse" />
+            {showExplosion && (
+              <div className="absolute inset-0 bg-white animate-ping" />
+            )}
           </div>
         </div>
       </div>
 
-      {/* النقاط المتحركة البسيطة */}
-      <div className="flex gap-3 mt-8">
-        {[0, 1, 2].map((i) => (
+      {/* الكرات المجنونة */}
+      <div className="flex gap-4 mt-10">
+        {[0, 1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="w-4 h-4 rounded-full bg-primary animate-bounce shadow-neon"
-            style={{ animationDelay: `${i * 0.3}s` }}
+            className="w-6 h-6 rounded-full bg-gradient-to-r from-red-400 to-purple-400 
+                       animate-bounce shadow-[0_0_15px_red]"
+            style={{ animationDelay: `${i * 0.2}s` }}
           />
         ))}
       </div>
 
-      {/* رمز بسيط */}
-      <div className="absolute bottom-8 right-8 text-6xl animate-float opacity-80">
+      {/* رموز الانفجار */}
+      <div className="absolute bottom-12 right-12 text-8xl animate-float opacity-90 
+                      filter drop-shadow-[0_0_20px_#ffbe0b]">
+        🚀
+      </div>
+      
+      <div className="absolute bottom-12 left-12 text-8xl animate-float opacity-90 
+                      filter drop-shadow-[0_0_20px_#ff006e]">
         ⚡
       </div>
       
-      {/* تذييل بسيط */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center">
-        <div className="font-electrolize text-sm text-primary/70 tracking-wider">
-          الإصدار 3.0 - تحضير للمعركة
+      {/* تذييل مجنون */}
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center">
+        <div className="font-electrolize text-lg text-red-400/80 tracking-wider font-bold
+                        filter drop-shadow-[0_0_10px_#ff0040]">
+          🔥 الإصدار الأسطوري - لا رحمة للأعداء 🔥
         </div>
       </div>
     </div>
