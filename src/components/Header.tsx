@@ -60,23 +60,10 @@ export function Header({
           </div>
         </div>
 
-        {/* Search Bar */}
-        <div className="flex-1 max-w-md mx-2 md:mx-8 relative hidden sm:block">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input 
-            type="text" 
-            placeholder="ابحث عن الأنمي..." 
-            value={searchValue} 
-            onChange={e => setSearchValue(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && handleSearch()}
-            className="pl-10 pr-4 bg-card border-border focus:ring-primary" 
-            dir="rtl" 
-          />
-        </div>
-
-        {/* Mobile Search Button */}
-        <Button variant="ghost" size="icon" className="sm:hidden" onClick={handleSearch}>
-          <Search className="h-5 w-5" />
+        {/* Search Button */}
+        <Button variant="outline" onClick={handleSearch} className="gap-2 min-w-[200px] justify-start text-muted-foreground">
+          <Search className="h-4 w-4" />
+          <span>ابحث عن الأنمي...</span>
         </Button>
 
         {/* Navigation and Actions */}
