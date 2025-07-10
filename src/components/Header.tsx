@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
+import { Sidebar } from "@/components/Sidebar";
 interface HeaderProps {
   onMenuToggle?: () => void;
   className?: string;
@@ -14,42 +14,41 @@ export function Header({
   className
 }: HeaderProps) {
   const [searchValue, setSearchValue] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = () => {
     if (searchValue.trim()) {
-      toast({
-        title: "🔍 البحث قيد التطوير",
-        description: `البحث عن: "${searchValue}" - قريباً سيكون متاحاً!`,
-      });
+      navigate(`/search?q=${encodeURIComponent(searchValue)}`);
+    } else {
+      navigate('/search');
     }
   };
 
   const handleFilter = () => {
-    toast({
-      title: "🔧 الفلترة قيد التطوير",
-      description: "قريباً ستتمكن من فلترة الأنمي حسب النوع والتقييم!",
-    });
+    navigate('/search?filter=true');
   };
 
   const handleBookmarks = () => {
-    toast({
-      title: "📚 المفضلة قيد التطوير", 
-      description: "قريباً ستتمكن من حفظ الأنمي المفضل لديك!",
-    });
+    navigate('/favorites');
   };
 
   const handleProfile = () => {
-    toast({
-      title: "👤 الملف الشخصي قيد التطوير",
-      description: "قريباً ستتمكن من إدارة حسابك الشخصي!",
-    });
+    navigate('/profile');
+  };
+
+  const handleMenuToggle = () => {
+    if (onMenuToggle) {
+      onMenuToggle();
+    } else {
+      setIsSidebarOpen(true);
+    }
   };
   return <header className={cn("sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-lg", className)}>
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo and Menu */}
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={onMenuToggle} className="md:hidden">
+          <Button variant="ghost" size="icon" onClick={handleMenuToggle} className="md:hidden">
             <Menu className="h-5 w-5" />
           </Button>
           
@@ -99,5 +98,7 @@ export function Header({
           </Button>
         </div>
       </div>
+      
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
     </header>;
 }
