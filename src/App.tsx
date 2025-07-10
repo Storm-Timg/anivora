@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import WatchAnime from "./pages/WatchAnime";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import { LoadingScreen } from "@/components/LoadingScreen";
 
@@ -43,6 +44,7 @@ const App = () => {
                 <Route path="/" element={<Index />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/auth" element={<Auth />} />
                 <Route path="/favorites" element={<Search />} />
                 <Route path="/watch/:id" element={<WatchAnime />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

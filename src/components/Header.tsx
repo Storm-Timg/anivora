@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, Filter, Menu, User, Bookmark, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/Sidebar";
+import { supabase } from "@/integrations/supabase/client";
+import { User as SupabaseUser, Session } from '@supabase/supabase-js';
 interface HeaderProps {
   onMenuToggle?: () => void;
   className?: string;
@@ -15,7 +17,27 @@ export function Header({
 }: HeaderProps) {
   const [searchValue, setSearchValue] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+      }
+    );
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleSearch = () => {
     if (searchValue.trim()) {
@@ -34,7 +56,11 @@ export function Header({
   };
 
   const handleProfile = () => {
-    navigate('/profile');
+    if (user) {
+      navigate('/profile');
+    } else {
+      navigate('/auth');
+    }
   };
 
   const handleMenuToggle = () => {
@@ -61,9 +87,13 @@ export function Header({
         </div>
 
         {/* Search Button */}
-        <Button variant="outline" onClick={handleSearch} className="gap-2 min-w-[200px] justify-start text-muted-foreground">
-          <Search className="h-4 w-4" />
-          <span>ابحث عن الأنمي...</span>
+        <Button variant="ghost" size="icon" onClick={handleSearch} className="hidden sm:flex">
+          <Search className="h-5 w-5" />
+        </Button>
+
+        {/* Mobile Search Button */}
+        <Button variant="ghost" size="icon" className="sm:hidden" onClick={handleSearch}>
+          <Search className="h-5 w-5" />
         </Button>
 
         {/* Navigation and Actions */}
