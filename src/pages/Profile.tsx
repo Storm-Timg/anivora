@@ -6,16 +6,21 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { User, Settings, Heart, Clock, Star } from "lucide-react";
-
 export default function Profile() {
-  const userStats = [
-    { label: "الأنمي المشاهد", value: "42", icon: Star },
-    { label: "المفضلة", value: "18", icon: Heart },
-    { label: "ساعات المشاهدة", value: "157", icon: Clock },
-  ];
-
-  return (
-    <div className="min-h-screen bg-background">
+  const userStats = [{
+    label: "الأنمي المشاهد",
+    value: "42",
+    icon: Star
+  }, {
+    label: "المفضلة",
+    value: "18",
+    icon: Heart
+  }, {
+    label: "ساعات المشاهدة",
+    value: "157",
+    icon: Clock
+  }];
+  return <div className="min-h-screen bg-background">
       <Header />
       
       <div className="container mx-auto px-4 py-8">
@@ -32,7 +37,7 @@ export default function Profile() {
                 </Avatar>
                 <div>
                   <CardTitle className="text-2xl mb-2" dir="rtl">مستخدم أنيفورا</CardTitle>
-                  <Badge variant="secondary" className="mb-4">عضو منذ 2024</Badge>
+                  
                   <div className="flex gap-2 justify-center">
                     <Button variant="outline" size="sm">
                       <Settings className="w-4 h-4 mr-2" />
@@ -46,15 +51,13 @@ export default function Profile() {
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {userStats.map((stat, index) => (
-              <Card key={index}>
+            {userStats.map((stat, index) => <Card key={index}>
                 <CardContent className="p-6 text-center">
                   <stat.icon className="w-8 h-8 mx-auto mb-2 text-primary" />
                   <div className="text-2xl font-bold text-foreground">{stat.value}</div>
                   <div className="text-sm text-muted-foreground" dir="rtl">{stat.label}</div>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)}
           </div>
 
           {/* Recently Watched */}
@@ -89,6 +92,5 @@ export default function Profile() {
       
       <Footer />
       <ScrollToTop />
-    </div>
-  );
+    </div>;
 }
