@@ -11,6 +11,7 @@ import { User, Session } from '@supabase/supabase-js';
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -45,7 +46,7 @@ export default function Auth() {
   }, [navigate]);
 
   const handleAuth = async () => {
-    if (!email || !password) {
+    if (!email || !password || (!isLogin && !username)) {
       toast({
         title: "خطأ",
         description: "يرجى ملء جميع الحقول",
@@ -90,7 +91,11 @@ export default function Auth() {
           email,
           password,
           options: {
-            emailRedirectTo: redirectUrl
+            emailRedirectTo: redirectUrl,
+            data: {
+              username: username,
+              display_name: username
+            }
           }
         });
 
@@ -158,6 +163,19 @@ export default function Auth() {
               dir="ltr"
             />
           </div>
+          {!isLogin && (
+            <div className="space-y-2">
+              <Label htmlFor="username" dir="rtl">اسم المستخدم</Label>
+              <Input
+                id="username"
+                type="text"
+                placeholder="اسم المستخدم"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                dir="rtl"
+              />
+            </div>
+          )}
           <div className="space-y-2">
             <Label htmlFor="password" dir="rtl">كلمة المرور</Label>
             <Input
