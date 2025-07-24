@@ -1,73 +1,96 @@
-# Welcome to your Lovable project
+# 🌸 Welcome to Anivora
 
-## Project info
+**Your ultimate anime-inspired web app — sleek, smart, and otaku-approved.**  
+Whether you're exploring characters, tracking episodes, or just vibing with that aesthetic, **Anivora** brings the anime universe to your fingertips. Built with 💖 using Vite, React, Tailwind, and dreams of becoming Hokage.
 
-**URL**: https://lovable.dev/projects/e3940b1f-7e40-41a5-86bd-d67d7a029332
+## 🚀 Live Project
 
-## How can I edit this code?
+🌐 [Launch Anivora](https://lovable.dev/projects/e3940b1f-7e40-41a5-86bd-d67d7a029332)
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## ✨ Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e3940b1f-7e40-41a5-86bd-d67d7a029332) and start prompting.
+- 🧠 Smart & minimal anime dashboard
+- 🎴 Sleek UI inspired by anime vibes
+- 🎌 Built with TypeScript, shadcn/ui & Tailwind CSS
+- 🛠️ Powered by Vite for blazing fast builds
+- 🌟 Lovable editor support for AI-powered changes
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## 🛠️ How to Edit This Project
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+You have **3 awesome ways** to hack on Anivora:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 1. 💜 Use [Lovable](https://lovable.dev/projects/e3940b1f-7e40-41a5-86bd-d67d7a029332)
 
-Follow these steps:
+- Click "Start Prompting" on the Lovable editor.
+- Every change is auto-committed to this repo.
+- Zero setup. Just pure creativity.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+### 2. 💻 Work Locally with Your IDE
+
+Make it yours by running it locally!
+
+```bash
+# 1. Clone the repo
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# 2. Move into the folder
+cd anivora
 
-# Step 3: Install the necessary dependencies.
-npm i
+# 3. Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Start developing
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+3. 🧠 Use GitHub Codespaces
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+    Go to the repo
 
-**Use GitHub Codespaces**
+    Click “Code” → “Codespaces” → “New Codespace”
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+    Develop in the cloud with zero config!
 
-## What technologies are used for this project?
+🧪 Tech Stack
 
-This project is built with:
+    Vite
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+    TypeScript
 
-## How can I deploy this project?
+    React
 
-Simply open [Lovable](https://lovable.dev/projects/e3940b1f-7e40-41a5-86bd-d67d7a029332) and click on Share -> Publish.
+    shadcn/ui
 
-## Can I connect a custom domain to my Lovable project?
+    Tailwind CSS
 
-Yes, you can!
+🌐 Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+You can deploy instantly via Lovable:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+    Go to Anivora Project
+
+    Click Share → Publish
+
+    Done. The world shall witness your anime power ✨
+
+🔗 Custom Domain
+
+Yes, you can add your own .anime or .waifu (ok not real domains, but you get it 😏)
+
+Go to Settings > Domains inside Lovable
+More info 👉 Custom Domains Guide
+📷 Screenshots
+
+(Add your app screenshots here for bonus ⭐ from curious devs)
+☎️ Contact
+
+Want to collab or suggest an anime feature?
+
+📧 Email: timguellinoptim@email.com
+🐱 GitHub: @Storm-Timg
+
+    “In the world of code, you're either a side character... or the main hero. Be the hero with Anivora.”
+    — Unknown anime senpai
