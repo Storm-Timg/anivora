@@ -47,55 +47,56 @@ export function HeroSection() {
   const anime = featuredAnimes[currentAnime];
 
   return (
-    <section className="relative h-[70vh] md:h-[80vh] overflow-hidden">
+    <section className="relative h-[100vh] sm:h-[90vh] md:h-[80vh] overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${anime.image})` }}
       />
       
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+      {/* Enhanced Gradient Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/60 sm:to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-glow opacity-30" />
 
       {/* Content */}
-      <div className="relative h-full flex items-center">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <div className="space-y-4 md:space-y-6 text-right" dir="rtl">
+      <div className="relative h-full flex items-center justify-center sm:justify-start">
+        <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
+          <div className="space-y-3 sm:space-y-4 md:space-y-6 text-center sm:text-right animate-fade-in" dir="rtl">
             {/* Rating */}
-            <div className="flex justify-end">
-              <div className="flex items-center gap-2 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-2">
+            <div className="flex justify-center sm:justify-end">
+              <div className="flex items-center gap-2 bg-black/70 backdrop-blur-md rounded-xl px-4 py-2 border border-primary/20 shadow-glow">
                 <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                <span className="text-white font-medium">{anime.rating}</span>
+                <span className="text-white font-semibold">{anime.rating}</span>
               </div>
             </div>
 
             {/* Title */}
-            <div className="space-y-2">
-              <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-foreground leading-tight">
+            <div className="space-y-2 sm:space-y-3">
+              <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-foreground leading-tight drop-shadow-2xl">
                 {anime.titleArabic}
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
+              <p className="text-lg sm:text-xl md:text-2xl text-primary-glow font-medium">
                 {anime.title}
               </p>
             </div>
 
             {/* Metadata */}
-            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground justify-end">
-              <span>{anime.year}</span>
-              <span>•</span>
-              <span>{anime.episodes} حلقة</span>
-              <span>•</span>
-              <span>مكتمل</span>
+            <div className="flex flex-wrap gap-3 text-sm sm:text-base text-muted-foreground justify-center sm:justify-end">
+              <span className="bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm">{anime.year}</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="bg-black/40 px-3 py-1 rounded-full backdrop-blur-sm">{anime.episodes} حلقة</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="bg-primary/20 text-primary px-3 py-1 rounded-full backdrop-blur-sm border border-primary/30">مكتمل</span>
             </div>
 
             {/* Genres */}
-            <div className="flex flex-wrap gap-2 justify-end">
+            <div className="flex flex-wrap gap-2 justify-center sm:justify-end">
               {anime.genres.map((genre) => (
                 <Badge
                   key={genre}
                   variant="outline"
-                  className="border-primary/30 text-primary bg-primary/10"
+                  className="border-primary/40 text-primary bg-primary/15 backdrop-blur-sm hover:bg-primary/25 transition-all duration-300 shadow-sm"
                 >
                   {genre}
                 </Badge>
@@ -103,27 +104,27 @@ export function HeroSection() {
             </div>
 
             {/* Description */}
-            <p className="text-sm sm:text-base text-foreground/90 leading-relaxed max-w-xl text-right line-clamp-3 sm:line-clamp-none">
+            <p className="text-sm sm:text-base md:text-lg text-foreground/90 leading-relaxed max-w-2xl text-center sm:text-right mx-auto sm:mx-0 line-clamp-4 sm:line-clamp-none backdrop-blur-sm bg-black/20 p-4 rounded-xl border border-white/10">
               {anime.description}
             </p>
 
             {/* Action Buttons */}
-            <div className="flex gap-2 md:gap-4 justify-end flex-wrap">
-              <Button variant="anime" size="lg" className="gap-2 flex-1 sm:flex-none">
+            <div className="flex gap-3 sm:gap-4 justify-center sm:justify-end flex-wrap items-center">
+              <Button variant="anime" size="lg" className="gap-2 flex-1 sm:flex-none shadow-hover animate-pulse-glow">
                 <Play className="h-4 w-4 md:h-5 md:w-5 fill-current" />
-                <span className="text-sm md:text-base">مشاهدة الآن</span>
+                <span className="text-sm md:text-base font-semibold">مشاهدة الآن</span>
               </Button>
               
-              <Button variant="outline" size="lg" className="gap-2 hidden sm:flex">
+              <Button variant="outline" size="lg" className="gap-2 hidden sm:flex backdrop-blur-md border-primary/30 hover:border-primary/50 hover:bg-primary/10">
                 <Info className="h-5 w-5" />
                 تفاصيل أكثر
               </Button>
               
-              <Button variant="ghost" size="icon" className="sm:hidden">
+              <Button variant="ghost" size="icon" className="sm:hidden backdrop-blur-md hover:bg-white/10">
                 <Info className="h-5 w-5" />
               </Button>
               
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="backdrop-blur-md hover:bg-white/10 hover:text-primary transition-all duration-300">
                 <Bookmark className="h-5 w-5" />
               </Button>
             </div>

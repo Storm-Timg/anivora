@@ -79,8 +79,8 @@ export function Header({
           </Button>
           
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">A</span>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
+              <img src="/src/assets/anivora-logo.png" alt="Anivora" className="w-full h-full object-contain" />
             </div>
             <h1 className="text-base sm:text-lg md:text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">Anivora</h1>
           </div>
