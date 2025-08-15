@@ -4,10 +4,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useNavigate } from "react-router-dom";
+import heartIcon from "@/assets/heart-icon.png";
 import { 
   Home, 
   Search, 
-  Heart, 
   User, 
   Filter,
   TrendingUp,
@@ -28,7 +28,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const mainMenuItems = [
     { icon: Home, label: "الصفحة الرئيسية", path: "/" },
     { icon: Search, label: "البحث", path: "/search" },
-    { icon: Heart, label: "المفضلة", path: "/favorites" },
+    { icon: "heart-custom", label: "المفضلة", path: "/favorites" },
     { icon: User, label: "الملف الشخصي", path: "/profile" },
   ];
 
@@ -83,7 +83,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                   onClick={() => handleNavigation(item.path)}
                   dir="rtl"
                 >
-                  <item.icon className="h-5 w-5 ml-3" />
+                  {item.icon === "heart-custom" ? (
+                    <img src={heartIcon} alt="المفضلة" className="h-5 w-5 ml-3" />
+                  ) : (
+                    <item.icon className="h-5 w-5 ml-3" />
+                  )}
                   {item.label}
                 </Button>
               ))}

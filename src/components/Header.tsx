@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Search, Filter, Menu, User, Bookmark, Home } from "lucide-react";
+import { Search, Filter, Menu, User, Home } from "lucide-react";
+import heartIcon from "@/assets/heart-icon.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -79,8 +80,8 @@ export function Header({
           </Button>
           
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
-              <img src="/src/assets/anivora-logo.png" alt="Anivora" className="w-full h-full object-contain" />
+            <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-lg">A</span>
             </div>
             <h1 className="text-base sm:text-lg md:text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">Anivora</h1>
           </div>
@@ -107,7 +108,7 @@ export function Header({
           </Button>
           
           <Button variant="ghost" size="icon" className="hidden md:flex" onClick={handleBookmarks}>
-            <Bookmark className="h-5 w-5" />
+            <img src={heartIcon} alt="المفضلة" className="h-5 w-5" />
           </Button>
           
           <Button variant="outline" size="icon" onClick={handleProfile}>
