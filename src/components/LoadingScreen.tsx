@@ -73,18 +73,11 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
           )}
         />
         
-        {/* تأثير اللمعان المار */}
+        {/* تأثير اللمعان الدائري */}
         {showShimmer && (
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
-                           animate-[shimmer_2s_ease-in-out] transform -skew-x-12" />
-          </div>
-        )}
-        
-        {/* هالة متوهجة أثناء النبض */}
-        {showPulse && (
-          <div className="absolute inset-0 -m-8">
-            <div className="w-full h-full rounded-full bg-primary/20 blur-xl animate-pulse" />
+          <div className="absolute inset-0 overflow-hidden rounded-full">
+            <div className="absolute inset-0 bg-gradient-conic from-transparent via-white/40 to-transparent 
+                           animate-[shimmer_2s_ease-in-out] rounded-full" />
           </div>
         )}
       </div>
