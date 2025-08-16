@@ -7,7 +7,6 @@ interface LoadingScreenProps {
 
 export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
   const [showShimmer, setShowShimmer] = useState(true);
-  const [showPulse, setShowPulse] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
@@ -25,26 +24,19 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
     `;
     document.head.appendChild(style);
 
-    // الخطوة الأولى: تأثير اللمعان
+    // تأثير اللمعان لمدة 3 ثواني
     const shimmerTimeout = setTimeout(() => {
       setShowShimmer(false);
-      setShowPulse(true);
-    }, 2000);
-
-    // الخطوة الثانية: تأثير النبض
-    const pulseTimeout = setTimeout(() => {
-      setShowPulse(false);
       setIsComplete(true);
-    }, 4000);
+    }, 3000);
 
-    // الخطوة الثالثة: الانتقال للتطبيق
+    // الانتقال للتطبيق
     const completeTimeout = setTimeout(() => {
       onLoadingComplete();
-    }, 5000);
+    }, 4000);
 
     return () => {
       clearTimeout(shimmerTimeout);
-      clearTimeout(pulseTimeout);
       clearTimeout(completeTimeout);
       if (document.head.contains(style)) {
         document.head.removeChild(style);
@@ -68,7 +60,6 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
           className={cn(
             "w-64 h-64 md:w-80 md:h-80 object-contain",
             "transition-all duration-1000 ease-in-out",
-            showPulse && "animate-pulse-glow scale-110",
             isComplete && "scale-125 opacity-75"
           )}
         />
@@ -78,7 +69,7 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
           <div className="absolute inset-0 rounded-full">
             <div className="absolute inset-0 border-4 border-transparent 
                            border-t-white/60 border-r-white/20 rounded-full
-                           animate-[shimmer-circle_2s_linear]" />
+                           animate-[shimmer-circle_3s_linear]" />
           </div>
         )}
       </div>
