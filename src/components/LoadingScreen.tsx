@@ -11,15 +11,15 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    // إضافة الأنيميشن المخصص للـ shimmer
+    // إضافة الأنيميشن المخصص للمعان الدائري
     const style = document.createElement('style');
     style.textContent = `
-      @keyframes shimmer {
+      @keyframes shimmer-circle {
         0% {
-          transform: translateX(-100%) skewX(-12deg);
+          transform: rotate(0deg);
         }
         100% {
-          transform: translateX(150%) skewX(-12deg);
+          transform: rotate(360deg);
         }
       }
     `;
@@ -73,11 +73,12 @@ export function LoadingScreen({ onLoadingComplete }: LoadingScreenProps) {
           )}
         />
         
-        {/* تأثير اللمعان الدائري */}
+        {/* تأثير اللمعان الدائري حول الصورة */}
         {showShimmer && (
-          <div className="absolute inset-0 overflow-hidden rounded-full">
-            <div className="absolute inset-0 bg-gradient-conic from-transparent via-white/40 to-transparent 
-                           animate-[shimmer_2s_ease-in-out] rounded-full" />
+          <div className="absolute inset-0 rounded-full">
+            <div className="absolute inset-0 border-4 border-transparent 
+                           border-t-white/60 border-r-white/20 rounded-full
+                           animate-[shimmer-circle_2s_linear]" />
           </div>
         )}
       </div>
